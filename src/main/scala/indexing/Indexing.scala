@@ -17,8 +17,8 @@ object Indexing {
       file => {
         count += 1
         val list = io.Source.fromFile(file).getLines()
-          .flatMap(_.split(" ")) // splitted according to space
-          .filter(word=> word != "--")  // excluded "--" as some files are looking in the form of table with these characters
+          .flatMap(_.split(" "))
+          .map(word=>word.filter(Character.isLetter(_)))// excluded "--" as some files are looking in the form of table with these characters
           .toList
         list.foreach { word =>
           val x = details.getOrElseUpdate(word, LinkedHashMap(file.toString -> 0))
